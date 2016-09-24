@@ -233,10 +233,7 @@ json_t *json_pack_media (struct tgl_message_media *M) {
     if (M->document) {
       if (M->document->caption){        
         assert (json_object_set (res, "filename", json_string (M->document->caption)) >= 0);
-      }
-      if (M->document->size){        
-        assert (json_object_set (res, "size", json_integer (M->document->size)) >= 0);
-      }
+      }          
     }
     break;
   case tgl_message_media_audio:
@@ -482,6 +479,11 @@ json_t *json_pack_message (struct tgl_message *M) {
     assert (json_object_set (res, "event", json_string ("service")) >= 0);
     assert (json_object_set (res, "action", json_pack_service (M)) >= 0);
   }
+
+  if (M->temp_id){
+        assert (json_object_set (res, "temp_id", json_integer (M->temp_id)) >= 0); 
+  }
+
   return res;
 }
 
